@@ -14,8 +14,8 @@ const App = () => {
       alert("Please select target language")
       return
     }
-    console.log(targetLanguage,sourceText)
-    const data = await translateText(sourceText,targetLanguage)
+    console.log(sourceText,sourceLanguage,targetLanguage)
+    const data = await translateText(sourceText,sourceLanguage,targetLanguage)
     console.log(data)
     setTranslatedText(data)
   }

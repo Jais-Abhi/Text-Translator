@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const translateText = async (sourceText, targetLanguage) => {
-console.log(sourceText,targetLanguage)
+const translateText = async (sourceText,sourceLanguage, targetLanguage) => {
+console.log(sourceText,sourceText,targetLanguage)
 const options = {
   method: 'POST',
   url: 'https://google-translator9.p.rapidapi.com/v2',
@@ -12,7 +12,7 @@ const options = {
   },
   data: {
     q: `${sourceText}`,
-    source: 'en',
+    source: `${sourceLanguage}`,
     target: `${targetLanguage}`,
     format: 'text'
   }
