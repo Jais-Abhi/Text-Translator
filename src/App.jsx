@@ -2,22 +2,33 @@ import React, { useState } from 'react'
 import languages from './languagesData.js'
 import {translateText,getLanguages} from "./Server.js"
 import OutputBox from './Components/OutputBox.jsx'
+import InputBox from './Components/InputBox.jsx'
 const App = () => {
   const [sourceText, setSourceText] = useState('')
   const [translatedText, setTranslatedText] = useState('')
   const [sourceLanguage, setSourceLanguage] = useState('en')
-  const [targetLanguage, setTargetLanguage] = useState('')
+  const [targetLanguage, setTargetLanguage] = useState('en')
+  const [loading,setLoading] = useState(false)
 
-
+  console.log("hyy app")
   const handleTranslate = async () => {
-    if(targetLanguage==""){
-      alert("Please select target language")
+    setLoading(true)
+    
+    if(sourceText == ""){
+      alert("Enter text for translate")
+      setLoading(false)
       return
     }
     console.log(sourceText,sourceLanguage,targetLanguage)
     const data = await translateText(sourceText,sourceLanguage,targetLanguage)
     console.log(data)
     setTranslatedText(data)
+    setLoading(false)
+  }
+
+  const handleSwapLanguages = async()=>{
+    setSourceLanguage(targetLanguage)
+    setTargetLanguage(sourceLanguage)
   }
 
   return (
@@ -34,7 +45,7 @@ const App = () => {
           {/* Language Selection Row */}
           <div className="flex gap-8 mb-8">
             {/* Source Language */}
-            <div className="flex-1">
+            <div className="flex-1" >
               <label className="block text-sm font-semibold text-white mb-2">From</label>
               <select
                 value={sourceLanguage}
@@ -42,13 +53,23 @@ const App = () => {
                 className="w-full px-4 py-2 border-2 border-gray-600 rounded-lg focus:outline-none focus:border-cyan-500 bg-gray-700 text-white cursor-pointer hover:bg-gray-650 transition-colors"
               >
                 {languages.map((lang) => (
-                  <option key={lang.code} value={lang.code} style={{ backgroundColor: '#374151', color: '#ffffff' }}>
+                  <option key={lang.code} value={lang.code} className='bg-[#374151] text-[#ffffff] '>
                     {lang.name}
                   </option>
                 ))}
               </select>
             </div>
 
+            {/* Swap Button */}
+            <div className="flex items-end pb-2">
+              <button
+                onClick={handleSwapLanguages}
+                className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center"
+                title="Swap languages"
+              >
+                ⇄
+              </button>
+            </div>
 
             {/* Target Language */}
             <div className="flex-1">
@@ -70,14 +91,7 @@ const App = () => {
           {/* Text Areas Row */}
           <div className="flex gap-8 mb-8">
             {/* Source Text Area */}
-            <div className="flex-1">
-              <textarea
-                value={sourceText}
-                onChange={(e) => setSourceText(e.target.value)}
-                placeholder="Enter text to translate..."
-                className="w-full h-64 p-4 border-2 border-gray-600 rounded-lg focus:outline-none focus:border-cyan-500 bg-gray-700 text-white placeholder-gray-500 resize-none"
-              />
-            </div>
+            <InputBox sourceText={sourceText} setSourceText={setSourceText}/>
 
             {/* Arrow */}
             <div className="flex items-center justify-center">
@@ -91,10 +105,11 @@ const App = () => {
           {/* Translate Button */}
           <div className="flex justify-center">
             <button
+            disabled={loading}
               onClick={handleTranslate}
-              className="px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+              className={`px-8 py-3 disabled:bg-cyan-800 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl`}
             >
-              Translate
+              {loading ? "Translating....": "Translate"}
             </button>
           </div>
         </div>

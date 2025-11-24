@@ -1,5 +1,4 @@
 const names = [
-  {code : "" ,  name : "select language"},
   { code: "af", name: "Afrikaans" },
   { code: "sq", name: "Albanian" },
   { code: "am", name: "Amharic" },

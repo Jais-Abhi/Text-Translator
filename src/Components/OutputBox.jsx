@@ -8,7 +8,7 @@ const OutputBox = ({translatedText}) => {
                 value={translatedText}
                 readOnly
                 placeholder="Translation will appear here..."
-                className="w-full h-64 p-4 border-2 border-gray-600 rounded-lg bg-gray-900 text-gray-300 placeholder-gray-600 resize-none cursor-not-allowed"
+                className="w-full h-64 p-4 border-2 border-gray-600 rounded-lg bg-gray-900 text-gray-300 placeholder-gray-600 resize-none cursor-copy"
               />
             </div>
   )
