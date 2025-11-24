@@ -1,26 +1,24 @@
 import React, { useState } from 'react'
 import languages from './languagesData.js'
 import {translateText,getLanguages} from "./Server.js"
+import OutputBox from './Components/OutputBox.jsx'
 const App = () => {
   const [sourceText, setSourceText] = useState('')
   const [translatedText, setTranslatedText] = useState('')
   const [sourceLanguage, setSourceLanguage] = useState('en')
-  const [targetLanguage, setTargetLanguage] = useState('es')
+  const [targetLanguage, setTargetLanguage] = useState('')
 
 
-  const handleTranslate = () => {
-    // Placeholder: In real implementation, this would call a translation API
-    console.log(languages)
-    getLanguages()
-    // setTranslatedText(translatedText) - would be updated with API response
+  const handleTranslate = async () => {
+    if(targetLanguage==""){
+      alert("Please select target language")
+      return
+    }
+    console.log(targetLanguage,sourceText)
+    const data = await translateText(sourceText,targetLanguage)
+    console.log(data)
+    setTranslatedText(data)
   }
-
-  // const handleSwapLanguages = () => {
-  //   setSourceLanguage(targetLanguage)
-  //   setTargetLanguage(sourceLanguage)
-  //   setSourceText(translatedText)
-  //   setTranslatedText(sourceText)
-  // }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
@@ -51,14 +49,6 @@ const App = () => {
               </select>
             </div>
 
-            {/* Swap Button */}
-            <div className="flex items-end">
-              <button
-                className="px-4 py-1 bg-cyan-600 text-3xl hover:bg-cyan-500 text-white font-semibold rounded-lg transition-colors duration-200 flex items-center gap-2"
-              >
-                →
-              </button>
-            </div>
 
             {/* Target Language */}
             <div className="flex-1">
@@ -95,14 +85,7 @@ const App = () => {
             </div>
 
             {/* Translated Text Area */}
-            <div className="flex-1">
-              <textarea
-                value={translatedText}
-                readOnly
-                placeholder="Translation will appear here..."
-                className="w-full h-64 p-4 border-2 border-gray-600 rounded-lg bg-gray-900 text-gray-300 placeholder-gray-600 resize-none cursor-not-allowed"
-              />
-            </div>
+            <OutputBox translatedText={translatedText} />
           </div>
 
           {/* Translate Button */}
