@@ -6,7 +6,7 @@ const options = {
   method: 'POST',
   url: 'https://google-translator9.p.rapidapi.com/v2',
   headers: {
-    'x-rapidapi-key': 'b897698501mshe76efc15970b6e5p19024ejsn2a799775518a',
+    'x-rapidapi-key': '',
     'x-rapidapi-host': 'google-translator9.p.rapidapi.com',
     'Content-Type': 'application/json'
   },
