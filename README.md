@@ -29,6 +29,8 @@ https://text-translator-wine.vercel.app/
 - Google Translate API (RapidAPI)
 
 ---
+use your owm - Google API (RapidAPI)
+---
 
 ## 📦 Installation
 
